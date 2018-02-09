@@ -1,0 +1,22 @@
+{
+  "name": "fei/phing-service",
+  "description": "Flash phing service",
+  "type": "service",
+  "keywords": [
+    "phing"
+  ],
+
+  "authors": [
+    {
+      "name": "Mathieu Hecker",
+      "email": "m.hecker@flash-global.net",
+      "role": "lead"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://composer.flash-global.net"
+    }
+  ]
+}
