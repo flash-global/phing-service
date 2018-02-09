@@ -1,0 +1,24 @@
+<project name="loadConfig" basedir="." default="setup-config">
+
+    <target name="sub-setup-config">
+        <loadfile property="file.config" file="${absfilename}">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="@(([a-z]*\.*)*)@" replace="${\1}"/>
+                </replaceregexp>
+            </filterchain>
+        </loadfile>
+        <php expression="substr('${filename}', 0, -5)" returnProperty="filenameClean" />
+        <echo message="${file.config}" file="${project.basedir}${config.path}/local/${filenameClean}"/>
+    </target>
+
+    <target name="setup-config">
+        <foreach param="filename" absparam="absfilename" target="sub-setup-config">
+            <fileset dir="${project.basedir}${config.path}">
+                <include name="*.php.dist" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="local-setup-config" depends="setup-config" />
+</project>
