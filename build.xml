@@ -1,7 +1,4 @@
 <project name="project" default="help" basedir=".">
-    <property file="${project.basedir}/build.properties"/>
-
-    <property name="config.path" value="${project.basedir}/app/config" />
     <property environment="env"/>
 
     <import file="${project.basedir}/loadConfig.xml"/>
@@ -73,8 +70,8 @@
         </pdosqlexec>
     </target>
 
-    <target name="setup-system" description="Execute Deployment, Create DB" depends="load-properties, setup-config"/>
-    <target name="local-setup-system" description="Execute Local Deployment" depends="load-properties, local-setup-config"/>
+    <target name="setup-system-build" description="Execute Deployment, Create DB" depends="load-properties, setup-config"/>
+    <target name="local-setup-system-build" description="Execute Local Deployment" depends="load-properties, local-setup-config"/>
 
     <target name="setup-continuousphp">
         <echo message="Creating htaccess" />
