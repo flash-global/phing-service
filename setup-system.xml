@@ -12,7 +12,12 @@
 
     <target name="without-acceptance">
         <echo message="Delete file acceptance.suite.yml to pass without acceptance tests" />
-        <delete file="${project.basedir}/tests/acceptance.suite.yml" />
+        <delete>
+            <fileset dir="${project.basedir}/tests/">
+                <include name="*.suite.yml" />
+                <exclude name="unit.suite.yml" />
+            </fileset>
+        </delete>
     </target>
 
     <target name="load-properties">

@@ -9,12 +9,12 @@
             </filterchain>
         </loadfile>
         <php expression="substr('${filename}', 0, -5)" returnProperty="filenameClean" />
-        <echo message="${file.config}" file="${project.basedir}${config.path}/local/${filenameClean}"/>
+        <echo message="${file.config}" file="${project.basedir}/${config.path}/local/${filenameClean}"/>
     </target>
 
     <target name="setup-config">
         <foreach param="filename" absparam="absfilename" target="sub-setup-config">
-            <fileset dir="${project.basedir}${config.path}">
+            <fileset dir="${project.basedir}/${config.path}">
                 <include name="*.php.dist" />
             </fileset>
         </foreach>
