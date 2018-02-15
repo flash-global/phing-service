@@ -20,8 +20,9 @@
         </foreach>
     </target>
 
-    <target name="local-setup-config" depends="setup-config" >
+    <target name="local-setup-config" >
         <echo message="Create config path" />
-        <mkdir dir="${config.path}/local" />
+        <mkdir dir="/${project.basedir}/${config.path}/local" />
+        <phingcall target="setup-config" />
     </target>
 </project>
