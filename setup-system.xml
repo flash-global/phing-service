@@ -59,13 +59,13 @@
 
     <target name="create-database">
         <echo message="Create Database"/>
-        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER}" userid="${env._DB_UNAME}">
+        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER}" password="${env._DB_UPASS}" userid="${env._DB_UNAME}">
             <transaction src="${project.basedir}/data/create-db.sql" />
         </pdosqlexec>
-        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" userid="${env._DB_UNAME}">
+        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" password="${env._DB_UPASS}" userid="${env._DB_UNAME}">
             <transaction src="${project.basedir}/data/mysql-init/00_db.sql" />
         </pdosqlexec>
-        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" userid="${env._DB_UNAME}">
+        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" password="${env._DB_UPASS}" userid="${env._DB_UNAME}">
             <fileset dir="${project.basedir}/data/mysql-init/">
                 <include name="*.sql"/>
                 <exclude name="00_db.sql"/>
