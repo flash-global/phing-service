@@ -5,7 +5,9 @@
   "keywords": [
     "phing"
   ],
-
+  "require": {
+      "phing/phing": "2.*"
+  },
   "authors": [
     {
       "name": "Mathieu Hecker",
