@@ -40,7 +40,7 @@
         <property file="${project.basedir}/build.properties"/>
     </target>
 
-    <target name="deployment">
+    <target name="acceptance-config">
         <echo message="Creating acceptance test config file"/>
         <reflexive>
             <fileset dir="${project.basedir}/tests/">
@@ -49,9 +49,9 @@
             </fileset>
             <filterchain>
                 <replaceregexp>
-                    <regexp pattern="${qaPatern}" replace="apache24" />
-                    <regexp pattern="mysql55" replace="127.0.0.1" />
-                    <regexp pattern="${qaUrlPatern}" replace="127.0.0.1" />
+                    <regexp pattern="${qaPattern}" replace="apache24" />
+                    <regexp pattern="${qaDatabase}" replace="127.0.0.1" />
+                    <regexp pattern="${qaUrlPattern}" replace="127.0.0.1" />
                 </replaceregexp>
             </filterchain>
         </reflexive>
@@ -76,7 +76,7 @@
     <target name="setup-system-build" description="Execute Deployment, Create DB" depends="load-properties, setup-config"/>
     <target name="local-setup-system-build" description="Execute Local Deployment" depends="load-properties, local-setup-config"/>
 
-    <target name="setup-continuousphp">
+    <target name="setup-continuousphp" depends="acceptance-config">
         <echo message="Creating htaccess" />
         <move file="htaccess.dist" tofile="${project.basedir}/public/.htaccess" overwrite="true" />
         <echo message="Getting c3.php" />
