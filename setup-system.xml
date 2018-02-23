@@ -50,7 +50,7 @@
             <filterchain>
                 <replaceregexp>
                     <regexp pattern="${qaPattern}" replace="apache24" />
-                    <regexp pattern="${qaDatabase}" replace="127.0.0.1" />
+                    <regexp pattern="${qaDatabase}" replace="mysql" />
                     <regexp pattern="${qaUrlPattern}" replace="127.0.0.1" />
                 </replaceregexp>
             </filterchain>
