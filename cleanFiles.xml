@@ -1,0 +1,17 @@
+<project name="project" default="help" basedir=".">
+    <target name="clean-build" description="Browse files from ini file list for build clean">
+        <loadfile property="files.list" srcFile="${project.basedir}/cleanFilesList.ini" />
+        <foreach list="${files.list}" param="fileClean" delimiter="${line.separator}" target="clean-files"/>
+        <exec command="find * -name *.dist -exec rm -f {} \;" passthru="true" />
+    </target>
+
+    <target name="clean-files" description="Clean file/directory from parameter">
+        <echo message="Delete file ${project.basedir}/${fileClean}" />
+        <exec command="rm -Rf ${project.basedir}/${fileClean}"  />
+    </target>
+
+    <target name="clean-name-dist" description="Rename files *.dist">
+        <php expression="substr('${absfilename}', 0, -5)" returnProperty="filenameClean" />
+        <copy file="${absfilename}" tofile="${filenameClean}" />
+    </target>
+</project>

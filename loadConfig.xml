@@ -1,6 +1,5 @@
 <project name="loadConfig" basedir="." default="setup-config">
-
-    <target name="sub-setup-config">
+    <target name="sub-setup-config" description="Replace token property by its value">
         <loadfile property="file.config" file="${absfilename}">
             <filterchain>
                 <replaceregexp>
@@ -8,11 +7,16 @@
                 </replaceregexp>
             </filterchain>
         </loadfile>
-        <php expression="substr('${filename}', 0, -5)" returnProperty="filenameClean" />
-        <echo message="${file.config}" file="${project.basedir}/${config.path}/local/${filenameClean}"/>
+        <echo message="${file.config}" file="${project.basedir}/${config.path}/${filename}"/>
+        <exec command="mv ${project.basedir}/${config.path}/${filename} ${project.basedir}/${config.path}/local/${filename}" />
+        <foreach param="filename" absparam="absfilename" target="clean-name-dist">
+            <fileset dir="${project.basedir}/${config.path}/local">
+                <include name="*.dist" />
+            </fileset>
+        </foreach>
     </target>
 
-    <target name="setup-config">
+    <target name="setup-config" description="Browse all files with pattern *.php.dist into path config">
         <foreach param="filename" absparam="absfilename" target="sub-setup-config">
             <fileset dir="${project.basedir}/${config.path}">
                 <include name="*.php.dist" />
@@ -20,7 +24,7 @@
         </foreach>
     </target>
 
-    <target name="local-setup-config" >
+    <target name="local-setup-config" description="Add local directory for local developments" >
         <echo message="Create config path" />
         <mkdir dir="/${project.basedir}/${config.path}/local" />
         <phingcall target="setup-config" />

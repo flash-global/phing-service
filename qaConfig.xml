@@ -1,0 +1,51 @@
+<project name="project" default="help" basedir=".">
+    <target name="create-database" description="Create database for qa">
+        <echo message="Create Database"/>
+        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER}" userid="${env._DB_UNAME}">
+            <transaction src="${project.basedir}/data/create-db.sql" />
+        </pdosqlexec>
+        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" userid="${env._DB_UNAME}">
+            <transaction src="${project.basedir}/data/mysql-init/00_db.sql" />
+        </pdosqlexec>
+        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" userid="${env._DB_UNAME}">
+            <fileset dir="${project.basedir}/data/mysql-init/">
+                <include name="*.sql"/>
+                <exclude name="00_db.sql"/>
+            </fileset>
+        </pdosqlexec>
+    </target>
+
+    <target name="without-acceptance" description="Build your project without acceptance">
+        <echo message="Delete file acceptance.suite.yml to pass without acceptance tests" />
+        <delete>
+            <fileset dir="${project.basedir}/tests/">
+                <include name="*.suite.yml" />
+                <exclude name="unit.suite.yml" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="setup-acceptance" description="Setup acceptance files for qa">
+        <echo message="Updating acceptance test config file"/>
+        <reflexive>
+            <fileset dir="${project.basedir}/tests/">
+                <include name="*.suite.yml.dist" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="qaPattern" replace="${qaPattern}" />
+                    <regexp pattern="qaDatabase" replace="${qaDatabase}" />
+                    <regexp pattern="qaUrlPattern" replace="${qaUrlPattern}" />
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
+        <echo message="Rename acceptance files"/>
+        <fileset dir="${project.basedir}/tests" id="testsPath">
+        </fileset>
+        <foreach param="filename" absparam="absfilename" target="clean-name-dist">
+            <fileset dir="${project.basedir}/tests">
+                <include name="*.dist" />
+            </fileset>
+        </foreach>
+    </target>
+</project>

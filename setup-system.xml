@@ -2,7 +2,11 @@
     <property environment="env"/>
 
     <import file="${project.basedir}/vendor/fei/phing-service/loadConfig.xml"/>
+    <import file="${project.basedir}/vendor/fei/phing-service/cleanFiles.xml"/>
+    <import file="${project.basedir}/vendor/fei/phing-service/qaConfig.xml"/>
+    <import file="${project.basedir}/vendor/fei/phing-service/loadProperties.xml"/>
 
+    <!-- HELP AVAILABLE TARGETS -->
     <target name="help" description="List available targets">
         <exec executable="vendor/bin/phing"
               passthru="true">
@@ -10,76 +14,7 @@
         </exec>
     </target>
 
-    <target name="without-acceptance">
-        <echo message="Delete file acceptance.suite.yml to pass without acceptance tests" />
-        <delete>
-            <fileset dir="${project.basedir}/tests/">
-                <include name="*.suite.yml" />
-                <exclude name="unit.suite.yml" />
-            </fileset>
-        </delete>
-    </target>
-
-    <target name="load-properties">
-        <available file='${project.basedir}/build.properties' type='file' property="buildProperties.Exists" />
-        <if>
-            <not><isset property="buildProperties.Exists"/></not>
-            <then>
-                <available file='build.properties.dist' type='file' property="buildPropertiesDist.Exists" />
-                <if>
-                    <isset property="buildPropertiesDist.Exists"/>
-                    <then>
-                        <copy file="build.properties.dist" tofile="build.properties"/>
-                    </then>
-                    <else>
-                        <fail message="Cannot load build.properties file" />
-                    </else>
-                </if>
-            </then>
-        </if>
-        <property file="${project.basedir}/build.properties"/>
-    </target>
-
-    <target name="acceptance-config">
-        <echo message="Creating acceptance test config file"/>
-        <reflexive>
-            <fileset dir="${project.basedir}/tests/">
-                <include name="*.suite.yml" />
-                <exclude name="unit.suite.yml" />
-            </fileset>
-            <filterchain>
-                <replaceregexp>
-                    <regexp pattern="${qaPattern}" replace="apache24" />
-                    <regexp pattern="${qaDatabase}" replace="mysql" />
-                    <regexp pattern="${qaUrlPattern}" replace="127.0.0.1" />
-                </replaceregexp>
-            </filterchain>
-        </reflexive>
-    </target>
-
-    <target name="create-database">
-        <echo message="Create Database"/>
-        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER}" userid="${env._DB_UNAME}">
-            <transaction src="${project.basedir}/data/create-db.sql" />
-        </pdosqlexec>
-        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" userid="${env._DB_UNAME}">
-            <transaction src="${project.basedir}/data/mysql-init/00_db.sql" />
-        </pdosqlexec>
-        <pdosqlexec url="mysql:host=${env._DB_SERVER_PDO_MASTER};dbname=${env._DB_DBNAME}" userid="${env._DB_UNAME}">
-            <fileset dir="${project.basedir}/data/mysql-init/">
-                <include name="*.sql"/>
-                <exclude name="00_db.sql"/>
-            </fileset>
-        </pdosqlexec>
-    </target>
-
-    <target name="setup-system-build" description="Execute Deployment, Create DB" depends="load-properties, setup-config"/>
-    <target name="local-setup-system-build" description="Execute Local Deployment" depends="load-properties, local-setup-config"/>
-
-    <target name="setup-continuousphp" depends="acceptance-config">
-        <echo message="Creating htaccess" />
-        <move file="htaccess.dist" tofile="${project.basedir}/public/.htaccess" overwrite="true" />
-        <echo message="Getting c3.php" />
-        <exec command="curl https://raw.githubusercontent.com/Codeception/c3/2.0/c3.php -o ${project.basedir}/c3.php" />
-    </target>
+    <!-- SETUP PART -->
+    <target name="setup-system-build" description="Load properties and setup config" depends="load-properties, setup-config"/>
+    <target name="local-setup-system-build" description="Load properties and setup config for local" depends="load-properties, local-setup-config"/>
 </project>

@@ -1,0 +1,12 @@
+<project name="project" default="help" basedir=".">
+    <target name="load-properties" description="Load properties file">
+        <available file='${project.basedir}/settings_local.ini' type='file' property="buildProperties.Exists" />
+        <if>
+            <isset property="buildProperties.Exists"/>
+            <then>
+                <property file="${project.basedir}/settings_local.ini"/>
+            </then>
+        </if>
+        <property file="${project.basedir}/build.properties"/>
+    </target>
+</project>
