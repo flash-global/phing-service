@@ -14,6 +14,12 @@
         </exec>
     </target>
 
+    <target name="setup-coverage" description="Add coverage file">
+        <echo message="Add coverage File"/>
+        <echo message="Getting c3.php" />
+        <exec command="curl https://raw.githubusercontent.com/Codeception/c3/2.0/c3.php -o ${project.basedir}/c3.php" />
+    </target>
+
     <!-- SETUP PART -->
     <target name="setup-system-build" description="Load properties and setup config" depends="load-properties, setup-config"/>
     <target name="local-setup-system-build" description="Load properties and setup config for local" depends="load-properties, local-setup-config"/>
