@@ -27,9 +27,14 @@
 
     <target name="setup-acceptance" description="Setup acceptance files for qa">
         <echo message="Updating acceptance test config file"/>
+        <foreach param="filename" absparam="absfilename" target="clean-name-dist">
+            <fileset dir="${project.basedir}/tests">
+                <include name="*.dist" />
+            </fileset>
+        </foreach>
         <reflexive>
             <fileset dir="${project.basedir}/tests/">
-                <include name="*.suite.yml.dist" />
+                <include name="*.suite.yml" />
             </fileset>
             <filterchain>
                 <replaceregexp>
@@ -42,10 +47,5 @@
         <echo message="Rename acceptance files"/>
         <fileset dir="${project.basedir}/tests" id="testsPath">
         </fileset>
-        <foreach param="filename" absparam="absfilename" target="clean-name-dist">
-            <fileset dir="${project.basedir}/tests">
-                <include name="*.dist" />
-            </fileset>
-        </foreach>
     </target>
 </project>
