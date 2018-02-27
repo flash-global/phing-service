@@ -41,6 +41,7 @@
                     <regexp pattern="qaPattern" replace="${qaPattern}" />
                     <regexp pattern="qaDatabase" replace="${qaDatabase}" />
                     <regexp pattern="qaUrlPattern" replace="${qaUrlPattern}" />
+		    <regexp pattern="qaBeanstalk" replace="${qaBeanstalk}" />
                 </replaceregexp>
             </filterchain>
         </reflexive>
