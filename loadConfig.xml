@@ -8,12 +8,7 @@
             </filterchain>
         </loadfile>
         <echo message="${file.config}" file="${project.basedir}/${config.path}/${filename}"/>
-        <exec command="mv ${project.basedir}/${config.path}/${filename} ${project.basedir}/${config.path}/local/${filename}" />
-        <foreach param="filename" absparam="absfilename" target="clean-name-dist">
-            <fileset dir="${project.basedir}/${config.path}/local">
-                <include name="*.dist" />
-            </fileset>
-        </foreach>
+        <exec command="cp ${project.basedir}/${config.path}/${filename} ${project.basedir}/${config.path}/local/${filename}" />
     </target>
 
     <target name="setup-config" description="Browse all files with pattern *.php.dist into path config">
@@ -22,6 +17,15 @@
                 <include name="*.php.dist" />
             </fileset>
         </foreach>
+        <fileset dir="${project.basedir}/${config.path}/local" id="localConfigPath">
+            <include name="*.dist" />
+        </fileset>
+        <foreach param="filename" absparam="absfilename" target="clean-name-dist">
+            <fileset id="localConfigPath" />
+        </foreach>
+        <delete>
+            <fileset id="localConfigPathLocal" />
+        </delete>
     </target>
 
     <target name="local-setup-config" description="Add local directory for local developments" >
