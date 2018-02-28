@@ -7,23 +7,23 @@
                 </replaceregexp>
             </filterchain>
         </loadfile>
-        <echo message="${file.config}" file="${project.basedir}/${config.path}/local/${filename}"/>
+        <echo message="${file.config}" file="${config.path}/local/${filename}"/>
     </target>
 
     <target name="setup-config" description="Browse all files with pattern *.php.dist into path config">
-        <exec command="cp ${project.basedir}/${config.path}/*.dist ${project.basedir}/${config.path}/local/." />
+        <exec command="cp ${config.path}/*.dist ${config.path}/local/." />
         <foreach param="filename" absparam="absfilename" target="sub-setup-config">
-            <fileset dir="${project.basedir}/${config.path}/local">
+            <fileset dir="${config.path}/local">
                 <include name="*.php.dist" />
             </fileset>
         </foreach>
         <foreach param="filename" absparam="absfilename" target="clean-name-dist">
-            <fileset dir="${project.basedir}/${config.path}/local" id="localConfigPath">
+            <fileset dir="${config.path}/local" id="localConfigPath">
                 <include name="*.dist" />
             </fileset>
         </foreach>
         <delete>
-            <fileset dir="${project.basedir}/${config.path}/local" id="localConfigPath">
+            <fileset dir="${config.path}/local" id="localConfigPath">
                 <include name="*.dist" />
             </fileset>
         </delete>
@@ -31,7 +31,7 @@
 
     <target name="local-setup-config" description="Add local directory for local developments" >
         <echo message="Create config path" />
-        <mkdir dir="/${project.basedir}/${config.path}/local" />
+        <mkdir dir="${config.path}/local" />
         <phingcall target="setup-config" />
     </target>
 </project>

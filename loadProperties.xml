@@ -7,6 +7,5 @@
                 <property file="${project.basedir}/settings_local.ini"/>
             </then>
         </if>
-        <property file="${project.basedir}/build.properties"/>
     </target>
 </project>
