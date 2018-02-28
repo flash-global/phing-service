@@ -25,7 +25,7 @@
         </delete>
     </target>
 
-    <target name="setup-acceptance" description="Setup acceptance files for qa">
+    <target name="setup-acceptance" description="Setup acceptance files for qa" depends="load-properties">
         <echo message="Updating acceptance test config file"/>
         <foreach param="filename" absparam="absfilename" target="clean-name-dist">
             <fileset dir="${project.basedir}/tests">
@@ -41,7 +41,7 @@
                     <regexp pattern="qaPattern" replace="${qaPattern}" />
                     <regexp pattern="qaDatabase" replace="${qaDatabase}" />
                     <regexp pattern="qaUrlPattern" replace="${qaUrlPattern}" />
-		    <regexp pattern="qaBeanstalk" replace="${qaBeanstalk}" />
+		            <regexp pattern="qaBeanstalk" replace="${qaBeanstalk}" />
                 </replaceregexp>
             </filterchain>
         </reflexive>
