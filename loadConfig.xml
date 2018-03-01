@@ -11,7 +11,7 @@
     </target>
 
     <target name="setup-config" description="Browse all files with pattern *.php.dist into path config">
-        <exec command="cp ${config.path}/*.dist ${config.path}/local/." />
+        <exec command="cp ${local.config.path}/*.dist ${config.path}/local/." />
         <foreach param="filename" absparam="absfilename" target="sub-setup-config">
             <fileset dir="${config.path}/local">
                 <include name="*.php.dist" />
