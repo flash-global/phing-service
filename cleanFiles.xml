@@ -2,7 +2,7 @@
     <target name="clean-build" description="Browse files from ini file list for build clean">
         <loadfile property="files.list" srcFile="${project.basedir}/vendor/fei/phing-service/cleanFilesList.ini" />
         <foreach list="${files.list}" param="fileClean" delimiter="${line.separator}" target="clean-files"/>
-        <exec command="find * -name *.dist -exec rm -f {} \;" passthru="true" />
+        <exec command="find * -name *.suite.yml.dist -exec rm -f {} \;" passthru="true" />
     </target>
 
     <target name="clean-files" description="Clean file/directory from parameter">
