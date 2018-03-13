@@ -1,0 +1,6 @@
+<project name="projectNameValue" default="help" basedir="../../../">
+    <import file="${project.basedir}/vendor/fei/phing-service/setup-system.xml"/>
+
+    <target name="setup-system" description="Execute Deployment, Create DB" depends="setup-node-config, setup-system-build"/>
+    <target name="local-setup-system" description="Execute Local Deployment" depends="setup-node-config, local-setup-system-build"/>
+</project>

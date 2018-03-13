@@ -1,0 +1,54 @@
+<project name="init-project" basedir="." default="init-project">
+    <target name="create-files" description="Browse all files with pattern *.php.dist into path config">
+        <copy file="${project.basedir}/vendor/fei/phing-service/settings_local_template.ini" tofile="${project.basedir}/settings_local.ini" />
+        <copy file="${project.basedir}/vendor/fei/phing-service/phingTemplate.xml" tofile="${project.basedir}/phing.xml" />
+        <echo message="${qaDatabaseValue}" />
+        <reflexive>
+            <fileset dir="${project.basedir}/">
+                <include name="phing.xml" />
+                <include name="settings_local.ini" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="projectNameValue" replace="${projectNameValue}" />
+                    <regexp pattern="configPathValue" replace="${configPathValue}" />
+                    <regexp pattern="configLocalPathValue" replace="${project.basedir}/${configPathValue}" />
+                    <regexp pattern="qaPatternValue" replace="${qaPatternValue}" />
+                    <regexp pattern="qaUrlPatternValue" replace="${qaUrlPatternValue}" />
+                    <regexp pattern="qaDatabaseValue" replace="${qaDatabaseValue}" />
+                </replaceregexp>
+            </filterchain>
+        </reflexive>
+    </target>
+
+    <target name="rename-file" description="Rename files into .dist">
+        <move file="${absfilename}" tofile="${absfilename}.dist" overwrite="true"/>
+    </target>
+
+    <target name="init-project" description="Build your environment">
+        <echo message="Create configuration" />
+        <propertyprompt propertyName="projectNameValue" defaultValue="project"
+                        promptText="Enter your project name" />
+        <propertyprompt propertyName="configPathValue" defaultValue="app/config"
+                        promptText="Enter your config path" />
+        <propertyprompt propertyName="qaPatternValue" defaultValue="${projectNameValue}_php"
+                        promptText="Enter your qa pattern (container php qa)" />
+        <propertyprompt propertyName="qaUrlPatternValue" defaultValue="qa.${projectNameValue}.local"
+                        promptText="Enter your qa url pattern (container url qa)" />
+        <propertyprompt propertyName="qaDatabaseValue" defaultValue="${projectNameValue}_mysql"
+                        promptText="Enter your qa mysql database (container mysql qa)" />
+
+        <echo message="Create phing files for local env" />
+        <phingcall target="create-files" inheritAll="true" />
+
+        <echo message="Rename files config" />
+        <foreach param="filename" absparam="absfilename" target="rename-file">
+            <fileset dir="${configPathValue}" id="configPath">
+                <include name="*.php" />
+            </fileset>
+            <fileset dir="${project.basedir}/tests/" id="testsPath">
+                <include name="*.yml" />
+            </fileset>
+        </foreach>
+    </target>
+</project>
