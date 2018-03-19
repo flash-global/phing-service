@@ -3,7 +3,7 @@
         <loadfile property="file.config" file="${absfilename}">
             <filterchain>
                 <replaceregexp>
-                    <regexp pattern="@(([a-z]*\.*)*)@" replace="${\1}"/>
+                    <regexp pattern="@(.[^@]*)@" replace="${\1}"/>
                 </replaceregexp>
             </filterchain>
         </loadfile>
