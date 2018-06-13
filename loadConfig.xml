@@ -15,6 +15,7 @@
         <foreach param="filename" absparam="absfilename" target="sub-setup-config">
             <fileset dir="${config.path}/local">
                 <include name="*.php.dist" />
+                <include name="*.json.dist" />
             </fileset>
         </foreach>
         <foreach param="filename" absparam="absfilename" target="clean-name-dist">
