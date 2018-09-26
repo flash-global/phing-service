@@ -1,7 +1,7 @@
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
- Copyright (C) 2018 Yoctu. <http://Yoctu.com/>
+ Copyright (C) 2018 Redspher. <http://Redspher.com/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
