@@ -10,7 +10,8 @@
         <echo message="Makedir of frontend dir" />
         <mkdir dir="${project.workingdir.resolved}/tmp" />
         <echo message="Git clone of frontend project" />
-        <exec command="git clone -q '${front.git.url}' './tmp'" dir="${project.workingdir.resolved}" />
+        <exec command="git clone -q '${front.git.url}' './tmp'" dir="${project.workingdir.resolved}" outputProperty="log.error" />
+        <echo message="Error = ${log.error}" />
     </target>
 
     <target name="front-clean-name-dist" description="Rename files *.js.dist to *.js">
