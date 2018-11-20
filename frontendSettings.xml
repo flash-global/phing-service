@@ -1,0 +1,57 @@
+<project name="frontendSettings" basedir=".">
+    <resolvepath propertyName="project.workingdir.resolved" file="./public" />
+    <target name="git-clone" description="Clone repository from front-project">
+        <exec command="git config --get user.name" outputProperty="git.user.name" />
+        <echo message="${git.user.name}" />
+        <echo message="Delete previous frontend dir" />
+        <delete dir="${project.workingdir.resolved}/tmp" includeemptydirs="true" />
+        <echo message="Makedir of frontend dir" />
+        <mkdir dir="${project.workingdir.resolved}/tmp" />
+        <echo message="Git clone of frontend project" />
+        <gitclone
+                repository="${front.git.url}"
+                targetPath="${project.workingdir.resolved}/tmp"
+                branch="${front.git.version}" />
+    </target>
+
+    <target name="front-clean-name-dist" description="Rename files *.js.dist to *.js">
+        <php expression="substr('${absfilename}', 0, -5)" returnProperty="filenameClean" />
+        <copy file="${absfilename}" tofile="${filenameClean}" />
+    </target>
+
+    <target name="sub-front-setup-config" description="Replace token property by its value">
+        <loadfile property="file.config" file="${absfilename}">
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="@(.[^@]*)@" replace="${\1}"/>
+                </replaceregexp>
+            </filterchain>
+        </loadfile>
+        <echo message="${file.config}" file="${project.workingdir.resolved}/tmp/${front.config.path}/${filename}"/>
+    </target>
+
+    <target name="front-setup-config" depends="load-properties, git-clone" description="Browse all files with pattern *.js.dist into local path config">
+        <foreach param="filename" absparam="absfilename" target="front-clean-name-dist">
+            <fileset dir="${project.workingdir.resolved}/tmp/${local.front.config.path}" id="localConfigPath">
+                <include name="*.dist" />
+            </fileset>
+        </foreach>
+
+        <foreach param="filename" absparam="absfilename" target="sub-front-setup-config">
+            <fileset dir="${project.workingdir.resolved}/tmp/${local.front.config.path}">
+                <include name="*.js" />
+            </fileset>
+        </foreach>
+
+        <delete dir="${project.workingdir.resolved}/tmp/${local.front.config.path}"/>
+
+        <echo message="Npm Install" />
+        <exec command="npm install" dir="${project.workingdir.resolved}/tmp" />
+        <echo message="Npm run build" />
+        <exec command="npm run-script build" dir="${project.workingdir.resolved}/tmp" />
+        <echo message="Move build into public directory" />
+        <move file="${project.workingdir.resolved}/tmp/build" todir="${project.workingdir.resolved}" />
+        <echo message="Remove tmp directory" />
+        <delete dir="${project.workingdir.resolved}/tmp/" />
+    </target>
+</project>
