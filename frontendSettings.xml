@@ -5,6 +5,8 @@
         <echo message="${git.user.name}" />
         <echo message="Delete previous frontend dir" />
         <delete dir="${project.workingdir.resolved}/tmp" includeemptydirs="true" />
+        <echo message="Install version control git" />
+        <exec command="pear install VersionControl_Git-alpha"  />
         <echo message="Makedir of frontend dir" />
         <mkdir dir="${project.workingdir.resolved}/tmp" />
         <echo message="Git clone of frontend project" />
