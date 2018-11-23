@@ -11,10 +11,7 @@
         <echo message="Makedir of frontend dir" />
         <mkdir dir="${project.workingdir.resolved}/tmp" />
         <echo message="Git clone of frontend project" />
-        <gitclone
-                repository="htpps://${env.GITHUB_TOKEN}${front.git.url}"
-                targetPath="${project.workingdir.resolved}/tmp"
-        />
+        <exec command="git clone htpps://${env.GITHUB_TOKEN}${front.git.url} ${project.workingdir.resolved}/tmp" />
         <echo message="Error = ${log.error}" />
     </target>
 
