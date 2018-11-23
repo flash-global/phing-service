@@ -10,7 +10,7 @@
         <echo message="Makedir of frontend dir" />
         <mkdir dir="${project.workingdir.resolved}/tmp" />
         <echo message="Git clone of frontend project" />
-        <exec command="git clone -q '${front.git.url}' './tmp'" dir="${project.workingdir.resolved}" outputProperty="log.error" />
+        <exec command="git clone -q '${env.GITHUB_TOKEN}:x-oauth-basic${front.git.url}' './tmp'" dir="${project.workingdir.resolved}" outputProperty="log.error" />
         <echo message="Error = ${log.error}" />
     </target>
 
