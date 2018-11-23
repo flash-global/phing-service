@@ -1,4 +1,5 @@
 <project name="frontendSettings" basedir=".">
+    <property environment="env" />
     <resolvepath propertyName="project.workingdir.resolved" file="./public" />
     <target name="git-clone" description="Clone repository from front-project">
         <exec command="git config --get user.name" outputProperty="git.user.name" />
