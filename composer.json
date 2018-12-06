@@ -6,7 +6,8 @@
     "phing"
   ],
   "require": {
-      "phing/phing": "2.*"
+      "phing/phing": "2.*",
+      "pear/versioncontrol_git": "^0.5"
   },
   "authors": [
     {

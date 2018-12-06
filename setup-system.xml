@@ -6,6 +6,7 @@
     <import file="${project.basedir}/vendor/fei/phing-service/qaConfig.xml"/>
     <import file="${project.basedir}/vendor/fei/phing-service/loadProperties.xml"/>
     <import file="${project.basedir}/vendor/fei/phing-service/initProject.xml"/>
+    <import file="${project.basedir}/vendor/fei/phing-service/frontendSettings.xml"/>
 
     <!-- HELP AVAILABLE TARGETS -->
     <target name="help" description="List available targets">

@@ -198,3 +198,23 @@ Overwrite acceptance variable(s)
 ## On Package Settings (for deploy pipeline) :
 >Phing Target
 >- clean-build
+
+## Addons
+Version \>= V4.2.0
+### Frontend execution
+In case of you have a project >Frontend/backend in the same repository, you can use this target to automaticly build into your backend build without actions of infra.
+
+In your settings ini, you have to add :
+```
+#Front settings
+front.git.url=@github.com/[YOUR FRONTEND PROJECT].git
+front.git.version=v1.0.0                    #Frontend version you would like to build
+front.workingdir=build                      #Folder where you build your front
+front.config.path=src/resources             #Path for your config file
+local.front.config.path=src/resources/conf
+```
+
+Target to add in continuous at the "Package Settings" step
+```
+front-setup-config
+```
