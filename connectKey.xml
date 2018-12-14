@@ -1,7 +1,7 @@
 <project name="project" default="connect-key-generate" basedir=".">
-    <target name="connect-key-exists" description="Check properties and connect key">
+    <target name="connect-key-generate" description="Check properties and connect key">
         <if>
-            <isset property="${connect.key.private}" />
+            <isset property="connect.key.private" />
             <then>
                 <echo msg="Property exist ! Check if key file exists ..." />
                 <available file='${config.path}/local/${connect.PrivateKeyFilePath}' type='file' property="connectKey.Exists"  value="Yes" />
@@ -25,16 +25,12 @@
                         <exec dir="${config.path}/local/" command="touch ${connect.PrivateKeyFilePath}" />
                     </then>
                 </if>
+                <echo msg="Copy key property in key file." />
+                <echo file="${config.path}/local/${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
             </then>
             <else>
                 <echo message="Key property is not set" />
             </else>
         </if>
-
-    </target>
-
-    <target name="connect-key-generate" description="Generate connect key" depends="connect-key-exists">
-        <echo msg="Copy key property in key file." />
-        <echo file="${config.path}/local/${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
     </target>
 </project>
