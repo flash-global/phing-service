@@ -1,0 +1,40 @@
+<project name="project" default="connect-key-generate" basedir=".">
+    <target name="connect-key-exists" description="Check properties and connect key">
+        <if>
+            <isset property="${connect.key.private}" />
+            <then>
+                <echo msg="Property exist ! Check if key file exists ..." />
+                <available file='${config.path}/local/keys/sp.pem' type='file' property="connectKey.Exists"  value="Yes" />
+                <if>
+                    <not>
+                        <isfalse value="${connectKey.Exists}" />
+                    </not>
+                    <then>
+                        <echo msg="Key file is not set ! Check if key directory exist ..." />
+                        <available property="connectDir.Exists" file="${config.path}/local/keys/" type="dir" />
+                        <if>
+                            <not>
+                            <isset property="connectDir.Exists" />
+                            </not>
+                            <then>
+                                <echo msg="Key directory is not set ! Create directory ..." />
+                                <mkdir dir="${config.path}/local/keys/" />
+                            </then>
+                        </if>
+                        <echo msg="Create key file ..." />
+                        <exec dir="${config.path}/local/keys/" command="touch sp.pem" />
+                    </then>
+                </if>
+            </then>
+            <else>
+                <echo message="Key property is not set" />
+            </else>
+        </if>
+
+    </target>
+
+    <target name="connect-key-generate" description="Generate connect key" depends="connect-key-exists">
+        <echo msg="Copy key property in key file." />
+        <echo file="${config.path}/local/keys/sp.pem" msg="${connect.key.private}" />
+    </target>
+</project>
