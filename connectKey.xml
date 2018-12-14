@@ -4,7 +4,7 @@
             <isset property="${connect.key.private}" />
             <then>
                 <echo msg="Property exist ! Check if key file exists ..." />
-                <available file='${config.path}/local/keys/sp.pem' type='file' property="connectKey.Exists"  value="Yes" />
+                <available file='${config.path}/local/${connect.PrivateKeyFilePath}' type='file' property="connectKey.Exists"  value="Yes" />
                 <if>
                     <not>
                         <isfalse value="${connectKey.Exists}" />
@@ -22,7 +22,7 @@
                             </then>
                         </if>
                         <echo msg="Create key file ..." />
-                        <exec dir="${config.path}/local/keys/" command="touch sp.pem" />
+                        <exec dir="${config.path}/local/" command="touch ${connect.PrivateKeyFilePath}" />
                     </then>
                 </if>
             </then>
@@ -35,6 +35,6 @@
 
     <target name="connect-key-generate" description="Generate connect key" depends="connect-key-exists">
         <echo msg="Copy key property in key file." />
-        <echo file="${config.path}/local/keys/sp.pem" msg="${connect.key.private}" />
+        <echo file="${config.path}/local/${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
     </target>
 </project>
