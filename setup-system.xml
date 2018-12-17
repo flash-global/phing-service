@@ -7,6 +7,7 @@
     <import file="${project.basedir}/vendor/fei/phing-service/loadProperties.xml"/>
     <import file="${project.basedir}/vendor/fei/phing-service/initProject.xml"/>
     <import file="${project.basedir}/vendor/fei/phing-service/frontendSettings.xml"/>
+    <import file="${project.basedir}/vendor/fei/phing-service/connectKey.xml"/>
 
     <!-- HELP AVAILABLE TARGETS -->
     <target name="help" description="List available targets">
@@ -23,6 +24,6 @@
     </target>
 
     <!-- SETUP PART -->
-    <target name="setup-system-build" description="Load properties and setup config" depends="load-properties, setup-config"/>
-    <target name="local-setup-system-build" description="Load properties and setup config for local" depends="load-properties, local-setup-config"/>
+    <target name="setup-system-build" description="Load properties and setup config" depends="load-properties, setup-config, connect-key-generate"/>
+    <target name="local-setup-system-build" description="Load properties and setup config for local" depends="load-properties, local-setup-config, connect-key-generate"/>
 </project>

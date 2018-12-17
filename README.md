@@ -218,3 +218,9 @@ Target to add in continuous at the "Package Settings" step
 ```
 front-setup-config
 ```
+
+### Connect key generating
+If you have to plug connect on your project, simply add the private key in following property
+```apacheconfig
+connect.key.private=[YOUR PRIVATE KEY]
+```

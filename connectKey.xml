@@ -1,0 +1,37 @@
+<project name="project" default="connect-key-generate" basedir=".">
+    <target name="connect-key-generate" description="Check properties and connect key">
+        <php expression="preg_replace('/([a-z]*)\.[a-z]*/i', '', '${connect.PrivateKeyFilePath}')" returnProperty="configKeyPath" />
+        <if>
+            <isset property="connect.key.private" />
+            <then>
+                <echo msg="Property exist ! Check if key file exists ..." />
+                <available file='${config.path}/local/${connect.PrivateKeyFilePath}' type='file' property="connectKey.Exists"  value="Yes" />
+                <if>
+                    <not>
+                        <isfalse value="${connectKey.Exists}" />
+                    </not>
+                    <then>
+                        <echo msg="Key file is not set ! Check if key directory exist ..." />
+                        <available property="connectDir.Exists" file="${config.path}/local/keys/" type="dir" />
+                        <if>
+                            <not>
+                                <isset property="connectDir.Exists" />
+                            </not>
+                            <then>
+                                <echo msg="Key directory is not set ! Create directory ..." />
+                                <mkdir dir="${config.path}/local${configKeyPath}" />
+                            </then>
+                        </if>
+                        <echo msg="Create key file ..." />
+                        <exec dir="${config.path}/local/" command="touch ${connect.PrivateKeyFilePath}" />
+                    </then>
+                </if>
+                <echo msg="Copy key property in key file." />
+                <echo file="${config.path}/local/${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
+            </then>
+            <else>
+                <echo message="Key property is not set" />
+            </else>
+        </if>
+    </target>
+</project>
