@@ -23,11 +23,11 @@
                             </then>
                         </if>
                         <echo msg="Create key file ..." />
-                        <exec dir="${config.path}/local/" command="touch ${connect.PrivateKeyFilePath}" />
+                        <exec dir="${config.path}/local/" command="touch .${connect.PrivateKeyFilePath}" />
                     </then>
                 </if>
                 <echo msg="Copy key property in key file." />
-                <echo file="${config.path}/local/${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
+                <echo file="${config.path}/local${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
             </then>
             <else>
                 <echo message="Key property is not set" />
