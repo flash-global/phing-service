@@ -27,7 +27,7 @@
                     </then>
                 </if>
                 <echo msg="Copy key property in key file." />
-                <php expression="preg_replace('/(\-){5}([A-Z ]*) (KEY)(\-){5}/i', '', '${connect.key.private}')" returnProperty="connect.key.private"
+                <php expression="preg_replace('/(\-){5}([A-Z ]*) (KEY)(\-){5}/i', '', '${connect.key.private}')" returnProperty="connect.key.private" />
                 <exec dir="${config.path}/local" command="echo -----BEGIN RSA PRIVATE KEY-----" output="${connect.PrivateKeyFilePath}" />
                 <exec dir="${config.path}/local" command="echo ${connect.key.private}" output="${connect.PrivateKeyFilePath}" />
                 <exec dir="${config.path}/local" command="echo -----BEGIN RSA PRIVATE KEY-----" output="${connect.PrivateKeyFilePath}" />
