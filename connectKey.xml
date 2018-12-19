@@ -27,7 +27,9 @@
                     </then>
                 </if>
                 <echo msg="Copy key property in key file." />
-                <echo file="${config.path}/local${connect.PrivateKeyFilePath}" msg="${connect.key.private}" />
+                <php expression="preg_replace('/(\-){5}([A-Z ]*) (KEY)(\-){5}/i', '', '${connect.key.private}')" returnProperty="connect.key.private" />
+                <php expression="str_replace(' ', '${line.separator}', trim('${connect.key.private}'))" returnProperty="connect.key.private" />
+                <echo file="${config.path}/local${connect.PrivateKeyFilePath}" msg="-----BEGIN RSA PRIVATE KEY-----${line.separator}${connect.key.private}${line.separator}-----END RSA PRIVATE KEY-----" append="false" />
             </then>
             <else>
                 <echo message="Key property is not set" />
