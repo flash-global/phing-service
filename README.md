@@ -35,6 +35,14 @@ qaBeanstalk=[CONTAINER BEANSTALK NAME] (if needed)
 ```
 > NB : After tag 3.* you have to prefix [CONFIG PATH] with ${project.basedir}
 
+Override `settings_local.ini` :
+For local usage it can be useful to override default local settings with specifics.
+To do this you just have to create file named `settings_local.override.ini` which will :
+- redefine properties
+- define new properties
+
+This file must be ignored.
+
 Complete this script with your properties with following pattern :
 ```ini
 [NAME OF CONFIG FILE].[YOUR OWN KEY]
