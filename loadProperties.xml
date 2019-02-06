@@ -1,6 +1,14 @@
 <project name="project" default="help" basedir=".">
     <target name="load-properties" description="Load properties file">
-        <available file='${project.basedir}/settings_local.ini' type='file' property="buildProperties.Exists" />
+        <available file='${project.basedir}/settings_local.override.ini' type='file' property="buildProperties.Exists"/>
+        <if>
+            <isset property="buildProperties.Exists"/>
+            <then>
+                <property file="${project.basedir}/settings_local.override.ini"/>
+            </then>
+        </if>
+
+        <available file='${project.basedir}/settings_local.ini' type='file' property="buildProperties.Exists"/>
         <if>
             <isset property="buildProperties.Exists"/>
             <then>
