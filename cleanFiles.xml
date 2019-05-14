@@ -11,7 +11,7 @@
     </target>
 
     <target name="clean-files-connect" description="Clean connect config file/directory">
-        <echo message="Delete file ${project.basedir}/${fileClean}" />
+        <echo message="Delete connect file in ${config.path}/local/ " />
         <exec command="rm -Rf ${config.path}/local/keys/*"  />
         <exec command="rm -Rf ${config.path}/local/idp.xml"  />
         <exec command="rm -Rf ${config.path}/local/keys/sp.xml"  />
