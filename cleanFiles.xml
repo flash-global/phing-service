@@ -9,14 +9,17 @@
         <echo message="Delete file ${project.basedir}/${fileClean}" />
         <exec command="rm -Rf ${project.basedir}/${fileClean}"  />
     </target>
-
-    <target name="clean-connect-files" description="Clean connect config file/directory">
-        <echo message="Delete connect files in ${config.path}/local/ " />
-        <exec command="rm -f ${config.path}/local/keys/sp.pem"  />
-        <exec command="rm -f ${config.path}/local/Saml/metadata/idp.xml"  />
-        <exec command="rm -f ${config.path}/local/Saml/metadata/sp.xml"  />
-    </target>
-
+    <if>
+        <istrue property="${connect.clean}"/>
+        <then>
+            <target name="clean-connect-files" description="Clean connect config file/directory">
+                <echo message="Delete connect files in ${config.path}/local/ "/>
+                <exec command="rm -f ${config.path}/local/keys/sp.pem"/>
+                <exec command="rm -f ${config.path}/local/Saml/metadata/idp.xml"/>
+                <exec command="rm -f ${config.path}/local/Saml/metadata/sp.xml"/>
+            </target>
+        </then>
+    </if>
     <target name="clean-name-dist" description="Rename files *.dist">
         <php expression="substr('${absfilename}', 0, -5)" returnProperty="filenameClean" />
         <copy file="${absfilename}" tofile="${filenameClean}" />
