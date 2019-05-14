@@ -14,7 +14,8 @@
         <echo message="Delete connect file in ${config.path}/local/ " />
         <exec command="rm -Rf ${config.path}/local/keys/*"  />
         <exec command="rm -Rf ${config.path}/local/idp.xml"  />
-        <exec command="rm -Rf ${config.path}/local/keys/sp.xml"  />
+        <exec command="rm -Rf ${config.path}/local/sp.xml"  />
+        <exec command="rm -Rf ${config.path}/local/Saml/metadata/*"  />
     </target>
 
     <target name="clean-name-dist" description="Rename files *.dist">
