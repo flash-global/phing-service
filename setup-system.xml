@@ -24,6 +24,6 @@
     </target>
 
     <!-- SETUP PART -->
-    <target name="setup-system-build" description="Load properties and setup config" depends="load-properties, setup-config, connect-key-generate,clean-connect-files"/>
+    <target name="setup-system-build" description="Load properties and setup config" depends="load-properties, setup-config, connect-key-generate, clean-connect-files"/>
     <target name="local-setup-system-build" description="Load properties and setup config for local" depends="load-properties, local-setup-config, connect-key-generate"/>
 </project>
