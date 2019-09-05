@@ -1,0 +1,17 @@
+<project name="project" default="help" basedir="../../../">
+    <target name="prepare-dredd" depends="load-properties">
+        <loadfile property="dredd.config" file="${project.basedir}/dredd.yml.dist">
+            <filterchain>
+                <replacetokens>
+                    <token key="baseUrl" value="${baseUrl}" />
+                    <token key="apiaryKey" value="${apiaryKey}" />
+                </replacetokens>
+            </filterchain>
+        </loadfile>
+
+        <echo message="Creating Dredd config file" />
+        <copy file="${project.basedir}/dredd.yml.dist" tofile="${project.basedir}/dredd.yml" overwrite="true" />
+
+        <echo message="${dredd.config}" file="${project.basedir}/dredd.yml"/>
+    </target>
+</project>
