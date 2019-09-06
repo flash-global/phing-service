@@ -3,7 +3,7 @@
         <loadfile property="dredd.config" file="${project.basedir}/dredd.yml.dist">
             <filterchain>
                 <replacetokens>
-                    <token key="baseUrl" value="${qa.baseUrl}" />
+                    <token key="qa.baseUrl" value="${qa.baseUrl}" />
                     <token key="apiaryKey" value="${apiaryKey}" />
                 </replacetokens>
             </filterchain>
