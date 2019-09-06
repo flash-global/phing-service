@@ -1,0 +1,20 @@
+<project name="project" default="help" basedir="../../../">
+    <target name="prepare-behat" depends="load-properties">
+        <echo message="[Populating behat.yml from behat.yml.dist]"/>
+        <echo message="baseUrl : ${qa.baseUrl}"/>
+
+        <loadfile property="behat.config" file="${project.basedir}/behat.yml.dist">
+            <filterchain>
+                <replacetokens>
+                    <token key="qa.baseUrl" value="${qa.baseUrl}"/>
+                    <token key="qa.debug" value="${qa.debug}"/>
+                </replacetokens>
+            </filterchain>
+        </loadfile>
+
+        <echo message="Creating behat file"/>
+        <copy file="${project.basedir}/behat.yml.dist" tofile="${project.basedir}/behat.yml" overwrite="true"/>
+
+        <echo message="${behat.config}" file="${project.basedir}/behat.yml"/>
+    </target>
+</project>
